@@ -14,16 +14,16 @@
         private $database_password;
 
         // class constructor
-        function __construct() {
+        function __construct($database_host = null, $database_username = null, $database_password = null) {
 
             // load the environment variables file
             $env = parse_ini_file('.env');
 
             // extract database information from environment
-            $this->database_host = $env['DATABASE_HOST'];
+            $this->database_host = $database_host ?? $env['DATABASE_HOST'];
             $this->database_name = $env['DATABASE_NAME'];
-            $this->database_username = $env['DATABASE_USERNAME'];
-            $this->database_password = $env['DATABASE_PASSWORD'];
+            $this->database_username = $database_username ?? $env['DATABASE_USERNAME'];
+            $this->database_password = $database_password ?? $env['DATABASE_PASSWORD'];
 
             try {
                 
@@ -43,7 +43,7 @@
         }
 
         // creates the users table in the database
-        function createUsersTable() {
+        public function createUsersTable() {
 
             try {
                 $sql = "CREATE TABLE IF NOT EXISTS users (name varchar(255) NOT NULL, surname varchar(255) NOT NULL, email VARCHAR(255) NOT NULL UNIQUE)";

@@ -23,9 +23,9 @@
             "--help" => "Output the above list of directives."
         ];
         
-        // echo the message with a new line character for readability
+        // standard output the message with a new line character for readability
         public static function output($message) {
-            echo $message . PHP_EOL;
+            fwrite(STDOUT, $message . PHP_EOL);
         }
 
         // displays available directives with details

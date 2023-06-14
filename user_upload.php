@@ -2,8 +2,10 @@
 
     require_once("console.php");
     require_once("database.php");
+    require_once("vendor/autoload.php");
 
     // overridden directive values
+    $file_name = null;
     $create_users_table = false;
     $database_host = null;
     $database_username = null;
@@ -30,6 +32,9 @@
         // handle directives
 
         switch ($directive) {
+            case Console::$DIRECTIVE_FILE:
+                $file_name = $directive_value;
+                break;
             case Console::$DIRECTIVE_CREATE_TABLE:
                 $create_users_table = true;
                 break;
@@ -54,6 +59,11 @@
     // create the users table if requested by directive
     if ($create_users_table) {
         $database->createUsersTable();
+    }
+
+    // load file into table if requested by directive
+    if ($file_name) {
+        $database->importCsv($file_name);
     }
 
     

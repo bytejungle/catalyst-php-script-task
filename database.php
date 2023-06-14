@@ -1,6 +1,8 @@
 <?php
+use League\Csv\Reader;
 
     require_once("console.php");
+    require_once("string_helper.php");
 
     class Database {
 
@@ -55,6 +57,58 @@
             }
         }
 
+        // reads a csv file and inserts the contents into the database
+        public function importCsv($file_name) {
+
+            try {
+
+                // begins transaction
+                $this->connection->beginTransaction();
+
+                // prepare insert statement
+                $sql = $this->connection->prepare("INSERT INTO users (name, surname, email) VALUES (:1, :2, :3)");
+
+                $csv = Reader::createFromPath($file_name)->setHeaderOffset(0);
+
+                // remove white space from headers
+                $headers = array_map('trim', $csv->getHeader());
+                foreach ($csv->getRecords($headers) as $record) {
+
+                    // check if data is valid
+                    $name = $record['name'];
+                    $surname = $record['surname'];
+                    $email = $record['email'];
+
+                    $is_valid = StringHelper::is_name_valid($name) && 
+                        StringHelper::is_name_valid($surname) && 
+                        StringHelper::is_email_address_valid($email);
+
+                    // format and save data if valid
+                    if ($is_valid) {
+                        
+                        // format data
+                        $name = StringHelper::format_name($record['name']);
+                        $surname = StringHelper::format_name($record['surname']);
+                        $email = StringHelper::format_email_address($record['email']);
+
+                        // bind and save data to database
+                        $sql->bindValue(":1", $name, PDO::PARAM_STR);
+                        $sql->bindValue(":2", $surname, PDO::PARAM_STR);
+                        $sql->bindValue(":3", $email, PDO::PARAM_STR);
+                        $sql->execute();
+                    }
+                }
+
+                // commit changes
+                $this->connection->commit();
+
+                Console::output("Data insertion complete!");
+            } catch (Exception $e) {
+                // roll back changes
+                $this->connection->rollBack();
+                Console::output("Data insertion failed! Error: " . $e->getMessage());
+            }
+        }
         public function getConnection() {
             return $this->connection;
         }

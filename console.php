@@ -13,6 +13,7 @@
         public static $DIRECTIVE_DB_HOST = "-h";
         public static $DIRECTIVE_HELP = "--help";
         
+        // a list of the directives and their descriptions
         private static $directives = [
             "--file" => "The name of the CSV to be parsed.",
             "--create_table" => "Cause the MySQL users table to be built (and no further action will be taken).",
@@ -37,7 +38,7 @@
         }
 
         // returns an array of available directives
-        public static function getAvailableDirectives() {
+        public static function get_available_directives() {
             return array_keys(self::$directives);
         }
     }

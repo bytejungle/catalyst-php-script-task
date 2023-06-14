@@ -45,7 +45,7 @@ use League\Csv\Reader;
         }
 
         // creates the users table in the database
-        public function createUsersTable() {
+        public function create_users_table() {
 
             try {
 
@@ -64,7 +64,7 @@ use League\Csv\Reader;
         }
 
         // reads a csv file and inserts the contents into the database
-        public function importCsv($file_name, $dry_run = false) {
+        public function import_csv($file_name, $dry_run = false) {
 
             try {
 
@@ -119,8 +119,5 @@ use League\Csv\Reader;
                 $this->connection->rollBack();
                 Console::output("Data insertion failed! Error: " . $e->getMessage());
             }
-        }
-        public function getConnection() {
-            return $this->connection;
         }
     }

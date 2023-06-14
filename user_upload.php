@@ -25,7 +25,7 @@
         $directive_value = $directive_and_value[1] ?? null;
 
         // check if directive is valid
-        if (!in_array($directive, Console::getAvailableDirectives())) {
+        if (!in_array($directive, Console::get_available_directives())) {
             Console::output("The directive $directive is not valid!");
             die();
         }
@@ -62,7 +62,7 @@
 
     // create the users table if requested by directive
     if ($create_users_table) {
-        $database->createUsersTable();
+        $database->create_users_table();
 
         // do not complete further actions
         die();
@@ -70,7 +70,7 @@
 
     // load file into table if requested by directive
     if ($file_name) {
-        $database->importCsv($file_name, $dry_run);
+        $database->import_csv($file_name, $dry_run);
     }
 
     

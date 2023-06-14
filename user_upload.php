@@ -6,6 +6,7 @@
 
     // overridden directive values
     $file_name = null;
+    $dry_run = false;
     $create_users_table = false;
     $database_host = null;
     $database_username = null;
@@ -35,6 +36,9 @@
             case Console::$DIRECTIVE_FILE:
                 $file_name = $directive_value;
                 break;
+            case Console::$DIRECTIVE_DRY_RUN:
+                $dry_run = true;
+                break;
             case Console::$DIRECTIVE_CREATE_TABLE:
                 $create_users_table = true;
                 break;
@@ -63,7 +67,7 @@
 
     // load file into table if requested by directive
     if ($file_name) {
-        $database->importCsv($file_name);
+        $database->importCsv($file_name, $dry_run);
     }
 
     

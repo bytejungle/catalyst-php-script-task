@@ -58,7 +58,7 @@ use League\Csv\Reader;
         }
 
         // reads a csv file and inserts the contents into the database
-        public function importCsv($file_name) {
+        public function importCsv($file_name, $dry_run = false) {
 
             try {
 
@@ -85,7 +85,7 @@ use League\Csv\Reader;
 
                     // format and save data if valid
                     if ($is_valid) {
-                        
+
                         // format data
                         $name = StringHelper::format_name($record['name']);
                         $surname = StringHelper::format_name($record['surname']);
@@ -99,10 +99,15 @@ use League\Csv\Reader;
                     }
                 }
 
-                // commit changes
-                $this->connection->commit();
+                // commit the changes if not on dry run
+                if (!$dry_run) {
+                    $this->connection->commit();
+                    Console::output("Data insertion complete!");
+                } else {
+                    Console::output("Data parse complete!");
+                }
 
-                Console::output("Data insertion complete!");
+                
             } catch (Exception $e) {
                 // roll back changes
                 $this->connection->rollBack();

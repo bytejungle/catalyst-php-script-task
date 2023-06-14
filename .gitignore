@@ -1,2 +1,4 @@
 # ignore environment variables file
 .env
+composer.lock
+vendor/*

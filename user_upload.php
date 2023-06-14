@@ -63,6 +63,9 @@
     // create the users table if requested by directive
     if ($create_users_table) {
         $database->createUsersTable();
+
+        // do not complete further actions
+        die();
     }
 
     // load file into table if requested by directive

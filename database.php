@@ -48,6 +48,12 @@ use League\Csv\Reader;
         public function createUsersTable() {
 
             try {
+
+                // drop the table if it already exists
+                $sql = "DROP TABLE IF EXISTS users";
+                $this->connection->query($sql);
+
+                // create table
                 $sql = "CREATE TABLE IF NOT EXISTS users (name varchar(255) NOT NULL, surname varchar(255) NOT NULL, email VARCHAR(255) NOT NULL UNIQUE)";
                 $this->connection->query($sql);
     

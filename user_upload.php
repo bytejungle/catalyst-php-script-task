@@ -4,6 +4,13 @@
     require_once("database.php");
     require_once("vendor/autoload.php");
 
+    // check PHP version
+    if (defined('PHP_MAJOR_VERSION') &&  PHP_MAJOR_VERSION < 8) 
+    {
+        Console::output("This script requires PHP Version > 8 to run.");
+        die();
+    } 
+
     // overridden directive values
     $file_name = null;
     $dry_run = false;

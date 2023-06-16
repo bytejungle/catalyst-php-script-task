@@ -2,13 +2,17 @@
 
     $output = [];
 
-    for ($i = 0; $i < 100; $i++) {
-
-        $number = $i+1;
+    for ($i = 1; $i <= 100; $i++) {
 
         // what the numbers are divisible by
-        $is_divisible_by_three = $number % 3 === 0;
-        $is_divisible_by_five = $number % 5 === 0;
+        $is_divisible_by_three = $i % 3 === 0;
+        $is_divisible_by_five = $i % 5 === 0;
+
+        // Where the number is divisible by three (3) and (5) output the word “foobar”
+        if ($is_divisible_by_three && $is_divisible_by_five) {
+            $output[] = "foobar";
+            continue;
+        }
 
         // Where the number is divisible by three (3) output the word “foo”
         if ($is_divisible_by_three) {
@@ -22,13 +26,7 @@
             continue;
         }
 
-        // Where the number is divisible by three (3) and (5) output the word “foobar”
-        if ($is_divisible_by_three && $is_divisible_by_five) {
-            $output[] = "foobar";
-            continue;
-        }
-
-        $output[] = $number;
+        $output[] = $i;
     }
 
     // add delimiters

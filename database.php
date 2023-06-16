@@ -54,7 +54,7 @@ use League\Csv\Reader;
                 $this->connection->query($sql);
 
                 // create table
-                $sql = "CREATE TABLE IF NOT EXISTS users (name varchar(255) NOT NULL, surname varchar(255) NOT NULL, email VARCHAR(255) NOT NULL UNIQUE)";
+                $sql = "CREATE TABLE IF NOT EXISTS users (id int NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, surname varchar(255) NOT NULL, email VARCHAR(255) NOT NULL UNIQUE, PRIMARY KEY (id))";
                 $this->connection->query($sql);
     
                 Console::output("User table creation successful!");

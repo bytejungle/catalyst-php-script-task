@@ -20,28 +20,12 @@
     $database_password = null;
 
     // handle command line directives
-    foreach ($argv as $index => $argument) {
-
-        // skip file name arg
-        if (str_contains($argument, "user_upload.php")) continue;
-
-        // explode argument into key pair values
-        $directive_and_value = explode("=", $argument);
-
-        $directive = $directive_and_value[0];
-        $directive_value = $directive_and_value[1] ?? null;
-
-        // check if directive is valid
-        if (!in_array($directive, Console::get_available_directives())) {
-            Console::output("The directive $directive is not valid!");
-            die();
-        }
-
-        // handle directives
+    $directives = Console::get_options();
+    foreach ($directives as $directive => $value) {
 
         switch ($directive) {
             case Console::$DIRECTIVE_FILE:
-                $file_name = $directive_value;
+                $file_name = $value;
                 break;
             case Console::$DIRECTIVE_DRY_RUN:
                 $dry_run = true;
@@ -50,16 +34,16 @@
                 $create_users_table = true;
                 break;
             case Console::$DIRECTIVE_DB_HOST:
-                $database_host = $directive_value;
+                $database_host = $value;
                 break;
             case Console::$DIRECTIVE_DB_USERNAME:
-                $database_username = $directive_value;
+                $database_username = $value;
                 break;
             case Console::$DIRECTIVE_DB_PASSWORD:
-                $database_password = $directive_value;
+                $database_password = $value;
                 break;
             case Console::$DIRECTIVE_HELP:
-                Console::displayDirectives();
+                Console::display_directives();
                 break;
         }
     }

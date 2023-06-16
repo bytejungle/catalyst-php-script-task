@@ -21,6 +21,9 @@
         // formats an email address
         public static function format_email_address($string) {
 
+            // remove white space
+            $string = trim($string);
+
             // make lowercase and return value
             return strtolower($string);
         }

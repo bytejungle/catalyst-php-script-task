@@ -24,6 +24,9 @@
     foreach ($directives as $directive => $value) {
 
         switch ($directive) {
+            case Console::$DIRECTIVE_HELP:
+                Console::display_directives();
+                die();
             case Console::$DIRECTIVE_FILE:
                 $file_name = $value;
                 break;
@@ -41,9 +44,6 @@
                 break;
             case Console::$DIRECTIVE_DB_PASSWORD:
                 $database_password = $value;
-                break;
-            case Console::$DIRECTIVE_HELP:
-                Console::display_directives();
                 break;
         }
     }
